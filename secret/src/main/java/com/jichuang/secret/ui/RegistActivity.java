@@ -25,6 +25,7 @@ public class RegistActivity extends Activity {
     private Button regist;
 
     private int backKeyPressedTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +61,10 @@ public class RegistActivity extends Activity {
                     try {
                         json.put("username", username.getText().toString());
                         json.put("password", password.getText().toString());
+
                         FilesUtil filesUtil = new FilesUtil(getApplicationContext());
                         filesUtil.privateSave("user.dat", json.toJSONString());
+
                         Toast.makeText(RegistActivity.this,
                                 getString(R.string.regist_success), Toast.LENGTH_SHORT).show();
 
