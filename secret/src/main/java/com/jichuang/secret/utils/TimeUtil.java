@@ -12,7 +12,7 @@ public class TimeUtil {
     public static String getStringDate() {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "YYYY/MM/dd-hh:mm:ss");
+                "yyyy/MM/dd-hh:mm:ss");
         return dateFormat.format(date.getTime() + date.getHours()
                 + date.getMinutes() + date.getSeconds());
     }
@@ -23,7 +23,7 @@ public class TimeUtil {
 
     public static String formatDateToString(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "YYYY/MM/dd hh:mm:ss");
+                "yyyy/MM/dd hh:mm:ss");
         return dateFormat.format(date.getTime() + date.getHours()
                 + date.getMinutes() + date.getSeconds());
     }

@@ -69,7 +69,7 @@ public class RegistActivity extends Activity {
                                 getString(R.string.regist_success), Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent();
-                        intent.setClass(RegistActivity.this, FeelingIndexActivity.class);
+                        intent.setClass(RegistActivity.this, IndexActivity.class);
                         startActivity(intent);
 
                         RegistActivity.this.finish();

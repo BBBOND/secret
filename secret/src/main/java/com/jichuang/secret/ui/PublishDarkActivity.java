@@ -1,6 +1,8 @@
 package com.jichuang.secret.ui;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -14,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 发送黑暗功能
  * Created by KIM on 2015/5/17.
  */
 public class PublishDarkActivity extends Activity {
@@ -27,6 +30,11 @@ public class PublishDarkActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_publishdark);
+
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(false);
+        }
 
         dark = (EditText) findViewById(R.id.et_dark);
         disappearTime = (Spinner) findViewById(R.id.disappear_time);
@@ -61,27 +69,41 @@ public class PublishDarkActivity extends Activity {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                //Toast
+                Toast.makeText(PublishDarkActivity.this,
+                        getString(R.string.publish_fail), Toast.LENGTH_SHORT).show();
                 return;
             }
-            dTime.setSeconds(time.getSeconds() + dTime.getSeconds());
-            dTime.setMinutes(time.getMinutes() + dTime.getMinutes());
-            dTime.setHours(time.getHours() + dTime.getHours());
-            dTime.setDate(time.getDate() + dTime.getDate());
-            dTime.setMonth(time.getMonth() + dTime.getMonth());
-            dTime.setYear(time.getYear() + dTime.getYear());
+            if (dTime == null) {
+                Toast.makeText(PublishDarkActivity.this,
+                        getString(R.string.publish_fail), Toast.LENGTH_SHORT).show();
+            } else {
+                dTime.setSeconds(time.getSeconds() + dTime.getSeconds());
+                dTime.setMinutes(time.getMinutes() + dTime.getMinutes());
+                dTime.setHours(time.getHours() + dTime.getHours());
+                dTime.setDate(time.getDate() + dTime.getDate());
+                dTime.setMonth(time.getMonth() + dTime.getMonth());
+                dTime.setYear(time.getYear() + dTime.getYear());
 
-            if (!darkStr.isEmpty()){
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("dark", darkStr);
-                jsonObject.put("disappearTime", dTime);
+                if (!darkStr.isEmpty()) {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("dark", darkStr);
+                    jsonObject.put("disappearTime", dTime);
 
-                try {
-                    FilesUtil filesUtil = new FilesUtil(getApplicationContext());
-                    filesUtil.appendSave("dark.txt",jsonObject.toJSONString());
+                    try {
+                        FilesUtil filesUtil = new FilesUtil(getApplicationContext());
+                        filesUtil.appendSave("dark.txt", jsonObject.toJSONString());
+                        Toast.makeText(PublishDarkActivity.this,
+                                getString(R.string.publish_success), Toast.LENGTH_SHORT).show();
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        Intent intent = new Intent();
+                        intent.setClass(PublishDarkActivity.this, DarkFragment.class);
+                        startActivity(intent);
+                        PublishDarkActivity.this.finish();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(PublishDarkActivity.this,
+                                getString(R.string.publish_fail), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }

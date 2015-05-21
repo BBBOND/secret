@@ -62,7 +62,7 @@ public class ReloginActivity extends Activity{
             if (password1.equals(password.getText().toString().trim())) {
 
                 Intent intent = new Intent();
-                intent.setClass(ReloginActivity.this,FeelingIndexActivity.class);
+                intent.setClass(ReloginActivity.this,IndexActivity.class);
                 startActivity(intent);
 
                 Toast.makeText(ReloginActivity.this, "登录成功！", Toast.LENGTH_LONG).show();

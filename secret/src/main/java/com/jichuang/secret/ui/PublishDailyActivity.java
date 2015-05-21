@@ -1,5 +1,6 @@
 package com.jichuang.secret.ui;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,11 @@ public class PublishDailyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_publishdaily);
+
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(false);
+        }
 
         weather = (Spinner) findViewById(R.id.weather);
         city = (Spinner) findViewById(R.id.city);
@@ -78,8 +84,9 @@ public class PublishDailyActivity extends Activity {
                             getString(R.string.publish_success), Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent();
-                    intent.setClass(PublishDailyActivity.this, DailyIndexActivity.class);
+                    intent.setClass(PublishDailyActivity.this, DailyFragment.class);
                     startActivity(intent);
+                    PublishDailyActivity.this.finish();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(PublishDailyActivity.this,
